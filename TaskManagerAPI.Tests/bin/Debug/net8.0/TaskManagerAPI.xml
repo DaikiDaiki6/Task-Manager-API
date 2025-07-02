@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaskManagerAPI</name>
+    </assembly>
+    <members>
+        <member name="T:TaskManagerAPI.Controllers.AuthController">
+            <summary>
+            Authentication controller for user login and registration
+            </summary>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.AuthController.Login(TaskManagerAPI.DTOs.Auth.LoginRequest)">
+            <summary>
+            Authenticates a user and returns a JWT token
+            </summary>
+            <param name="loginRequest">User credentials</param>
+            <returns>JWT token and user information</returns>
+            <response code="200">Login successful</response>
+            <response code="401">Invalid credentials</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.AuthController.Register(TaskManagerAPI.DTOs.User.CreateUserRequest)">
+            <summary>
+            Registers a new user and returns a JWT token
+            </summary>
+            <param name="registerRequest">User registration data</param>
+            <returns>JWT token and user information</returns>
+            <response code="201">Registration successful</response>
+            <response code="400">Username already exists or validation failed</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="T:TaskManagerAPI.Controllers.TaskController">
+            <summary>
+            Task management controller for authenticated users
+            </summary>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.TaskController.GetAllTask(PaginationRequest)">
+            <summary>
+            Gets all tasks for the authenticated user with pagination
+            </summary>
+            <param name="pagination">Pagination parameters</param>
+            <returns>Paginated list of user's tasks</returns>
+            <response code="200">Tasks retrieved successfully</response>
+            <response code="401">User not authenticated</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.TaskController.GetTaskById(System.Int32)">
+            <summary>
+            Gets task that correspond to the param task id
+            </summary>
+            <param name="id">Task Id</param>
+            <returns>Get task information</returns>
+            <response code="200">Task get successfully</response>
+            <response code="401">Invalid task data</response>
+            <response code="404">User not authenticated</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.TaskController.CreateTask(TaskManagerAPI.DTOs.Task.CreateTaskRequest)">
+            <summary>
+            Creates a new task for the authenticated user
+            </summary>
+            <param name="createTaskRequest">Task creation data</param>
+            <returns>Created task information</returns>
+            <response code="201">Task created successfully</response>
+            <response code="400">Invalid task data</response>
+            <response code="401">User not authenticated</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.TaskController.EditTask(System.Int32,TaskManagerAPI.DTOs.Task.UpdateTaskRequest)">
+            <summary>
+            Edit a task for the corresponing Task Id
+            </summary>
+            <param name="id">Task ID</param>
+            <param name="updateTaskRequest">Task creation data</param>
+            <returns>Updated task information</returns>
+            <response code="201">Task updated successfully</response>
+            <response code="400">Invalid task data</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.TaskController.DeleteTask(System.Int32)">
+            <summary>
+            Delete a task for the corresponing Task Id
+            </summary>
+            <param name="id">Task ID</param>
+            <returns>Deleted task information</returns>
+            <response code="204">Task deleted successfully</response>
+            <response code="400">Invalid task data</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="T:TaskManagerAPI.Controllers.UsersController">
+            <summary>
+            User profile management controller
+            </summary>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.UsersController.GetAllUsers(PaginationRequest)">
+            <summary>
+            Gets all users
+            </summary>
+            <returns>User profile information</returns>
+            <response code="200">Users retrieved successfully</response>
+            <response code="404">Users not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.UsersController.GetProfile">
+            <summary>
+            Gets the authenticated user's profile
+            </summary>
+            <returns>User profile information</returns>
+            <response code="200">Profile retrieved successfully</response>
+            <response code="401">User not authenticated</response>
+            <response code="404">User not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:TaskManagerAPI.Controllers.UsersController.UpdateProfile(TaskManagerAPI.DTOs.User.UpdateUserRequest)">
+            <summary>
+            Updates the authenticated user's profile
+            </summary>
+            <param name="updateUserRequest">Updated user data</param>
+            <returns>Updated user profile</returns>
+            <response code="200">Profile updated successfully</response>
+            <response code="400">Invalid user data or username already exists</response>
+            <response code="401">User not authenticated</response>
+            <response code="404">User not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Auth.AuthResponse">
+            <summary>
+            Authentication response containing JWT token and user information
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.AuthResponse.Token">
+            <summary>
+            JWT authentication token
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.AuthResponse.Expires">
+            <summary>
+            Token expiration date and time
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.AuthResponse.User">
+            <summary>
+            Authenticated user information
+            </summary>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Auth.UserInfo">
+            <summary>
+            User information included in authentication response
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.UserInfo.Id">
+            <summary>
+            User unique identifier
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.UserInfo.UserName">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.UserInfo.CreatedAt">
+            <summary>
+            Account creation date
+            </summary>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Auth.LoginRequest">
+            <summary>
+            User information included in login response
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.LoginRequest.UserName">
+            <summary>
+            User Name
+            </summary>
+            <value>Default value is Empty. User Name.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Auth.LoginRequest.PassWord">
+            <summary>
+            User Password
+            </summary>
+            <value>Default value is Empty. User Password.</value>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Common.PaginatedResponse`1">
+            <summary>
+            Generic paginated response wrapper for API endpoints that return multiple items
+            </summary>
+            <typeparam name="T">The type of items in the paginated collection</typeparam>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.Data">
+            <summary>
+            Collection of items for the current page
+            </summary>
+            <value>List of items of type T. Empty list if no items found.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.Page">
+            <summary>
+            Current page number (starts from 1)
+            </summary>
+            <value>The page number that was requested and returned</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.PageSize">
+            <summary>
+            Number of items per page
+            </summary>
+            <value>Maximum number of items that can be returned in a single page</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.TotalCount">
+            <summary>
+            Total number of items across all pages
+            </summary>
+            <value>Complete count of items in the entire collection, not just current page</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.TotalPages">
+            <summary>
+            Total number of pages available
+            </summary>
+            <value>Calculated as ceiling(TotalCount / PageSize)</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.HasNextPage">
+            <summary>
+            Indicates whether there are more pages after the current page
+            </summary>
+            <value>True if Page &lt; TotalPages, otherwise false</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Common.PaginatedResponse`1.HasPreviousPage">
+            <summary>
+            Indicates whether there are pages before the current page
+            </summary>
+            <value>True if Page &gt; 1, otherwise false</value>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Task.CreateTaskRequest">
+            <summary>
+            Request model for creating a new task
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.CreateTaskRequest.Title">
+            <summary>
+            Title of the task
+            </summary>
+            <value>Task title with maximum length of 100 characters. Cannot be empty.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.CreateTaskRequest.Description">
+            <summary>
+            Detailed description of the task
+            </summary>
+            <value>Task description with maximum length of 500 characters. Cannot be empty.</value>
+        </member>
+        <member name="F:TaskManagerAPI.DTOs.Task.CreateTaskRequest.Status">
+            <summary>
+            Current status of the task
+            </summary>
+            <value>
+            Task status enum:
+            0 = Ongoing (default),
+            1 = Stopped,
+            2 = Finished
+            </value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.CreateTaskRequest.DueDate">
+            <summary>
+            Due date and time for task completion
+            </summary>
+            <value>Must be a future date. Cannot be in the past.</value>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.Task.UpdateTaskRequest">
+            <summary>
+            Request model for updating an existing task
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.UpdateTaskRequest.Title">
+            <summary>
+            Updated title of the task
+            </summary>
+            <value>Task title with maximum length of 100 characters. Cannot be empty.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.UpdateTaskRequest.Description">
+            <summary>
+            Updated detailed description of the task
+            </summary>
+            <value>Task description with maximum length of 500 characters. Cannot be empty.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.UpdateTaskRequest.Status">
+            <summary>
+            Updated status of the task
+            </summary>
+            <value>
+            Task status enum:
+            0 = Ongoing,
+            1 = Stopped,
+            2 = Finished
+            </value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.Task.UpdateTaskRequest.DueDate">
+            <summary>
+            Updated due date and time for task completion
+            </summary>
+            <value>Must be a future date. Cannot be in the past.</value>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.User.CreateUserRequest">
+            <summary>
+            Request model for creating a new user account
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.User.CreateUserRequest.UserName">
+            <summary>
+            Username for the new account
+            </summary>
+            <value>Username must be between 3 and 50 characters. Can only contain letters, numbers, and underscores. Must be unique.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.User.CreateUserRequest.PassWord">
+            <summary>
+            Password for the new account
+            </summary>
+            <value>Password must be between 6 and 100 characters. Must contain at least one lowercase letter, one uppercase letter, and one number.</value>
+        </member>
+        <member name="T:TaskManagerAPI.DTOs.User.UpdateUserRequest">
+            <summary>
+            Request model for updating an existing user's profile
+            </summary>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.User.UpdateUserRequest.UserName">
+            <summary>
+            Updated username for the account
+            </summary>
+            <value>Username must be between 3 and 50 characters. Can only contain letters, numbers, and underscores. Must be unique if changed.</value>
+        </member>
+        <member name="P:TaskManagerAPI.DTOs.User.UpdateUserRequest.PassWord">
+            <summary>
+            Updated password for the account
+            </summary>
+            <value>Password must be between 6 and 100 characters. Must contain at least one lowercase letter, one uppercase letter, and one number.</value>
+        </member>
+        <member name="T:TaskManagerAPI.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TaskManagerAPI.Migrations.FixJobstoTaskPropName">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.FixJobstoTaskPropName.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.FixJobstoTaskPropName.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.FixJobstoTaskPropName.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TaskManagerAPI.Migrations.UpdateEntityAnnotations">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.UpdateEntityAnnotations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.UpdateEntityAnnotations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskManagerAPI.Migrations.UpdateEntityAnnotations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PaginationRequest">
+            <summary>
+            Pagination request parameters for paginated API endpoints
+            </summary>
+        </member>
+        <member name="P:PaginationRequest.Page">
+            <summary>
+            Page number to retrieve (starts from 1)
+            </summary>
+            <value>Default value is 1. Invalid values are automatically corrected to 1.</value>
+        </member>
+        <member name="P:PaginationRequest.PageSize">
+            <summary>
+            Number of items per page
+            </summary>
+            <value>Default value is 10. Must be between 1 and 100. Invalid values are automatically corrected.</value>
+        </member>
+        <member name="M:PaginationRequest.GetValidPage">
+            <summary>
+            Gets a valid page number, ensuring it's at least 1
+            </summary>
+            <returns>Valid page number (minimum 1)</returns>
+        </member>
+        <member name="M:PaginationRequest.GetValidPageSize">
+            <summary>
+            Gets a valid page size, ensuring it's between 1 and 100
+            </summary>
+            <returns>Valid page size (between 1 and 100)</returns>
+        </member>
+    </members>
+</doc>
